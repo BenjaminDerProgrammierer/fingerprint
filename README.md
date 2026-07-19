@@ -21,10 +21,6 @@
 
 ## Wiring
 
-<div style="position: relative; width: 100%; padding-top: calc(max(56.25%, 400px));">
-  <iframe src="https://app.cirkitdesigner.com/project/f00a5960-7620-446b-900b-7fb7076e3451?view=interactive_preview" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
-</div>
-
 Edit this project interactively in [Cirkit Designer](https://app.cirkitdesigner.com/project/f00a5960-7620-446b-900b-7fb7076e3451).
 
 | Pin on Arduino Mega | Pin on Fingerprint Sensor |
