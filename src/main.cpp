@@ -32,26 +32,27 @@ void setServoPosition(bool state);
 
 /**
  * @brief Arduino setup function, runs once at startup
- *
  */
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   Serial.println();
+
   initializeOledDisplay();
 
   pinMode(LED_RED_PIN, OUTPUT);
   pinMode(LED_YELLOW_PIN, OUTPUT);
   pinMode(LED_GREEN_PIN, OUTPUT);
+  showVaultState(vaultState);
+
   servo.attach(SERVO_PIN);
-  showVaultState(0);       // start with vault locked
-  setServoPosition(false); // start with servo in locked position
+  setServoPosition(vaultState);
+  
   initializeFingerprintSensor();
 }
 
 /**
  * @brief Arduino loop function, runs repeatedly after setup
- *
  */
 void loop() {
   // put your main code here, to run repeatedly:
@@ -64,6 +65,7 @@ void loop() {
   display.println("Place your finger on the sensor");
   display.println("Scanning...");
   display.display();
+
   if (detectFingerprint() == FINGERPRINT_OK) {
     vaultState = !vaultState;
 
@@ -82,8 +84,6 @@ void loop() {
     setServoPosition(vaultState);
     delay(2000);
     if (vaultState) {
-      showVaultState(2);
-      delay(2000);
       showVaultState(1);
       Serial.println(F("Vault unlocked!"));
     } else {
@@ -107,12 +107,14 @@ void loop() {
  */
 void initializeOledDisplay() {
   delay(250);
+
   if (!display.begin(OLED_ADDRESS, true)) {
     Serial.println(F("Failed to initialize OLED display"));
     while (true) {
       delay(1); // Halt program execution
     }
   }
+
   display.clearDisplay();
   display.setTextSize(1);
   display.setTextColor(SH110X_WHITE);
@@ -125,12 +127,12 @@ void initializeOledDisplay() {
 
 /**
  * @brief Initializes the fingerprint sensor
- *
  */
 void initializeFingerprintSensor() {
   finger.begin(57600);
   if (!finger.verifyPassword()) {
     Serial.println(F("Did not find fingerprint sensor"));
+
     display.clearDisplay();
     display.setTextSize(1);
     display.setTextColor(SH110X_WHITE);
@@ -139,14 +141,15 @@ void initializeFingerprintSensor() {
     display.println("---------------------");
     display.println("FATAL ERROR\nFingerprint sensor not found");
     display.display();
+
     while (true) {
       delay(1); // Halt program execution
     }
   }
 
   Serial.println(F("Found fingerprint sensor!"));
-  finger.getParameters();
 
+  finger.getParameters();
   Serial.print(F("Status: 0x"));
   Serial.println(finger.status_reg, HEX);
   Serial.print(F("Sys ID: 0x"));
@@ -189,7 +192,6 @@ void printUnexpectedStatus(uint8_t status) {
 
 /**
  * @brief Waits for a fingerprint image to be captured
- *
  */
 void waitForFingerprintImage() {
   while (true) {
@@ -288,34 +290,9 @@ uint8_t detectFingerprint() {
  * locking/unlocking)
  */
 void showVaultState(int state) {
-  bool ledRedState = false;
-  bool ledYellowState = false;
-  bool ledGreenState = false;
-  switch (state) {
-  case 0: // locked
-    ledRedState = true;
-    ledYellowState = false;
-    ledGreenState = false;
-    break;
-  case 1: // unlocked
-    ledRedState = false;
-    ledYellowState = false;
-    ledGreenState = true;
-    break;
-  case 2: // locking
-    ledRedState = false;
-    ledYellowState = true;
-    ledGreenState = false;
-    break;
-  default:
-    ledRedState = false;
-    ledYellowState = false;
-    ledGreenState = false;
-    break;
-  }
-  digitalWrite(LED_RED_PIN, ledRedState ? HIGH : LOW);
-  digitalWrite(LED_YELLOW_PIN, ledYellowState ? HIGH : LOW);
-  digitalWrite(LED_GREEN_PIN, ledGreenState ? HIGH : LOW);
+  digitalWrite(LED_RED_PIN, state == 0 ? HIGH : LOW);
+  digitalWrite(LED_YELLOW_PIN, state == 2 ? HIGH : LOW);
+  digitalWrite(LED_GREEN_PIN, state == 1 ? HIGH : LOW);
 }
 
 /**
