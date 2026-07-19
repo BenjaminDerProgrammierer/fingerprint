@@ -60,3 +60,8 @@ Edit this project interactively in [Cirkit Designer](https://app.cirkitdesigner.
 ## Lapse URLs
 
 * [Circuit Design](https://lapse.hackclub.com/timelapse/v32__6YKCWld)
+
+## AI use
+
+* Code help (line completions)
+* Re-Structuring the multitool firmware
