@@ -57,10 +57,6 @@ Edit this project interactively in [Cirkit Designer](https://app.cirkitdesigner.
 | GND                 | GND                      |
 | 5V                  | VCC                      |
 
-## Lapse URLs
-
-* [Circuit Design](https://lapse.hackclub.com/timelapse/v32__6YKCWld)
-
 ## AI use
 
 * Code help (line completions)
