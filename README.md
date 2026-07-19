@@ -4,6 +4,8 @@
 
 ![Built Prototype](built_image.jpg)
 
+![Demo](https://cdn.hackclub.com/019f7c06-5b58-7539-9a33-7f3371bca0d5/vid_20260719_221402617.mp4)
+
 ## Bill of Materials
 
 * 1 [Arduino Mega](https://store.arduino.cc/products/arduino-mega-2560-rev3) - ca 53 EUR
