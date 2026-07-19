@@ -15,9 +15,13 @@
 
 ## How to Use
 
-1. Connect the components according to the wiring diagram below.
-2. Upload the code to the Arduino Mega.
-3. (Optional) Open the Serial Monitor at 9600 baud.
+1. Install Visual Studio Code and PlatformIO.
+2. Clone this repository, and open it in Visual Studio Code.
+3. Connect the components according to the wiring diagram below.
+4. Move the tools/multitool.cpp to the src folder to build and upload the multitool firmware to the Arduino Mega.
+5. Open the Serial Monitor at 9600 baud and enroll your fingerprints using the multitool firmware.
+6. Remove the multitool.cpp from the src folder and build and upload the main firmware to the Arduino Mega.
+7. You can now open/close the lock (servo, you can hook this up to anything) using your enrolled fingerprints.
 
 ## Wiring
 
